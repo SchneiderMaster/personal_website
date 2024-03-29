@@ -1,0 +1,16 @@
+.bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 20px;
+    height: 300px;
+    background-color: gray;
+  }
+  
+.bar .progress {
+  background-color: red;
+  width: 50%;
+  height: 90%;
+}
+
