@@ -1,0 +1,18 @@
+.customButton{
+    width: 100px;
+    aspect-ratio: 1;
+    border-radius: 10%;
+    border: 3px solid #f00;
+    text-decoration: none;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/800px-GitHub_Invertocat_Logo.svg.png');
+    background-size: 70%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(100, 30, 120, 0.7);
+    transition: 0.4s;
+}
+
+.customButton:hover{
+    background-color: rgba(100, 30, 120, 0.9);
+    width: 120px;
+}
