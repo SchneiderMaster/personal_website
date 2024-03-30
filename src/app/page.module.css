@@ -36,7 +36,7 @@
 .custombuttonwrapper {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-around;
   align-items: center;
   margin-bottom: 10%; 
 }

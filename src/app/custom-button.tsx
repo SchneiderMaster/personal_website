@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './custom-button.module.css';
 
-export default function CustomButton() {
+export default function CustomButton({ backgroundImage, href }) {
     return (
-        <a className={styles.customButton} href='https://github.com/SchneiderMaster'>
+        <a style={{backgroundImage: 'url(' + backgroundImage + ')'}} className={styles.customButton} href={href}>
             
         </a>
     );
