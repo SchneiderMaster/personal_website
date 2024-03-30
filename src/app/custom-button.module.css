@@ -14,5 +14,5 @@
 
 .customButton:hover{
     background-color: rgba(100, 30, 120, 0.9);
-    width: 120px;
+    transform: scale(1.3);
 }

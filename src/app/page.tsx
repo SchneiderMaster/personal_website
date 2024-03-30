@@ -31,7 +31,7 @@ export default function Home() {
       const newPositions = [...prevPositions];
       newPositions[index] = {
         left: clamp(40, prevPositions[index].left + xOffset, 60),
-        top: clamp(40, prevPositions[index].top + yOffset, 60),
+        top: clamp(40+window.scrollY/window.innerHeight*100, prevPositions[index].top + yOffset+window.scrollY/window.innerHeight*100, 60+window.scrollY/window.innerHeight*100),
         width: prevPositions[index].width,
         height: prevPositions[index].height
       };
