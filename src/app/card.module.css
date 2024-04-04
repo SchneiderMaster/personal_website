@@ -1,19 +1,29 @@
 .card {
     margin-top: 30vh;
     background-color: blueviolet;
-    border-radius: 10px;
+    border-radius: 40px;
     display: flex;
+    flex-direction: row;
+    align-items: center;
     padding: 5vh;
 }
 
 .card p {
     margin: 10vh;
     font-size: large;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
 }
 
 .card div {
     background-size: contain;
     aspect-ratio: 1;
-    width: 40%;
-    border-radius: 50%;
+    width: 30%;
+    border-radius: 35%;
+}
+
+.card h2 {
+    font-weight: 550;
+    
 }
