@@ -2,20 +2,71 @@
     width: 100px;
     aspect-ratio: 1;
     border-radius: 15%;
-    border: 2px solid #f00;
     text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    border: 0.2px solid rgba(150, 150, 150, 0.1);
+    background-color: #5e27cc33;
+    transition: 0.4s;
+}
+
+.customButtonInner{
     background-size: 70%;
     background-position: center;
     background-repeat: no-repeat;
-    background-color: rgba(100, 30, 120, 0.7);
+    width: 100%;
+    height: 100%;
     transition: 0.4s;
-    position: relative;
+}
+
+.customButtonWrapper{
+    
+    transition: 0.4s;
+    background-color: rgba(30,30,30,0.5);
+    padding: 2px;
+    border-radius: 15%;
+    border: 0.2px solid rgba(150, 150, 150, 0.1);
     overflow: hidden;
 }
 
-.customButton:hover{
+
+.customButtonWrapper::before{
+    content: "";
+    width: 500px;
+    height: 40px;
+    background-color: #AAA;
+    position: absolute;
+    transform: translate(-50%, -50%) rotate(45deg);
+    opacity: 0;
+    transition-delay: 0s;
+    left: 50%;
+    top: 50%;
+}
+
+.customButtonWrapper:hover::before{
+    opacity: 100%;
+    transition-duration: 0.4s;
+    transition-delay: 0.2s;
+    animation: rotate-border 2s cubic-bezier(.38,.03,.74,1) infinite;
+}
+
+@keyframes rotate-border {
+    from{
+        transform: translate(-50%, -50%) rotate(0deg)
+    }
+    to{
+        transform: translate(-50%, -50%) rotate(360deg)
+    }
+}
+
+.customButtonWrapper:hover{
     transform: scale(1);
     transform: scale(1.3);
+}
+
+.customButtonWrapper:hover > .customButton {
+    background-color: #2C1853;
 }
 
 .customButton:hover > .customButtonGradient{
@@ -24,9 +75,9 @@
 
 .customButtonGradient{
     position: absolute;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(rgba(150, 150, 150, 0.8), rgba(255, 255, 255, 0.0), rgba(255, 255, 255, 0.0));
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(rgba(150, 150, 150, 0.7), rgba(255, 255, 255, 0.0), rgba(255, 255, 255, 0.0));
     background-repeat: no-repeat;
     opacity: 0;
     transition: opacity 0.5s;

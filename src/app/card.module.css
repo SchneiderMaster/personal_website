@@ -1,0 +1,19 @@
+.card {
+    margin-top: 30vh;
+    background-color: blueviolet;
+    border-radius: 10px;
+    display: flex;
+    padding: 5vh;
+}
+
+.card p {
+    margin: 10vh;
+    font-size: large;
+}
+
+.card div {
+    background-size: contain;
+    aspect-ratio: 1;
+    width: 40%;
+    border-radius: 50%;
+}

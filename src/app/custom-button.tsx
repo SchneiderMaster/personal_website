@@ -9,14 +9,17 @@ export default function CustomButton({ backgroundImage, href }) {
     const handleMouseMove = (e: any) => {
         if (anchorRef.current) {
             const anchorRect = anchorRef.current.getBoundingClientRect();
-            setMousePosition({x: (e.clientX - anchorRect.left - anchorRect.width/2)/1.3, y: (e.clientY - anchorRect.top - anchorRect.height/2)/1.3});
+            setMousePosition({x: (e.clientX - anchorRect.left - anchorRect.width*2/2)/1.3, y: (e.clientY - anchorRect.top - anchorRect.height*2/2)/1.3});
      }
     };
 
 
     return (
-        <a ref={anchorRef} style={{backgroundImage: 'url(' + backgroundImage + ')'}} className={styles.customButton} href={href} onMouseMove={handleMouseMove}>
-            <div className={styles.customButtonGradient} style={{left: mousePosition.x, top: mousePosition.y}}></div>
-        </a>
+        <div className={styles.customButtonWrapper}>
+            <a ref={anchorRef} className={styles.customButton} href={href} onMouseMove={handleMouseMove}>
+                <div className={styles.customButtonInner} style={{backgroundImage:'url(' + backgroundImage + ')', zIndex: 3}}></div>
+                <div className={styles.customButtonGradient} style={{left: mousePosition.x, top: mousePosition.y}}></div>
+            </a>
+        </div>
     );
 }
