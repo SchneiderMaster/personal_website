@@ -1,14 +1,26 @@
 .card {
     margin-top: 30vh;
-    background-color: blueviolet;
+    background: linear-gradient(-45deg, #5e27ccaa, #5e27cc11, #0000);
     border-radius: 40px;
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 5vh;
+    border: 0.2px solid rgba(150, 150, 150, 0.1);
+    transition: 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    background-repeat: no-repeat;
+    background-size: 200%;
 }
 
-.card p {
+.invisible {
+    background-position-x: 100vw;
+}
+
+.visible {
+    background-position-x: -60vw;
+}
+
+.text {
     margin: 10vh;
     font-size: large;
     display: flex;
@@ -16,7 +28,7 @@
     gap: 1vh;
 }
 
-.card div {
+.image {
     background-size: contain;
     aspect-ratio: 1;
     width: 30%;
