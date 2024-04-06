@@ -37,5 +37,15 @@
 
 .card h2 {
     font-weight: 550;
-    
+}
+
+.fadedIn {
+    opacity: 1;
+    transition-duration: 2s;
+    transition-delay: 0.6s;
+}
+
+.fadedOut {
+    opacity: 0;
+    transition: none;
 }
