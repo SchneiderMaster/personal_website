@@ -37,13 +37,15 @@ try
 {
   const res = await getDocs(collection(db, "issues"));
 
-  res.forEach((doc) => {
-    console.log(doc.data());
-  });
+
+res.forEach((doc) => {
+  console.log(doc.data());
+});
 }
 catch{
   console.log("no auth lol")
 }
+
 
 const inter = Inter({ subsets: ["latin"] });
 
