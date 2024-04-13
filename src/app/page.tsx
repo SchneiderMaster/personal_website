@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import _ from 'lodash';
 import CustomButton from "./custom-button";
 import Card from "./card";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "./layout";
 
 export default function Home() {
 
@@ -57,6 +59,25 @@ export default function Home() {
 
     }
   }, [positions.length]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   return (
