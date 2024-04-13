@@ -84,7 +84,7 @@ export default function Home() {
         <CustomButton backgroundImage={"https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/At_sign.svg/220px-At_sign.svg.png"} href={"mailto:pixelprodigy27@gmail.com"}></CustomButton>
       </div>
       { /* eslint-disable-next-line react/no-unescaped-entities */ }
-      <p> Lorem ipsum </p>
+      <p> Lorem ipsum Lorem ipsum but in cooler and a little bit longer and I am overall very coooool.</p>
         
               <Card></Card>
     </main>
