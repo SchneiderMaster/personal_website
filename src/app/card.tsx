@@ -30,7 +30,8 @@ export default function Card() {
             <div className={styles.image} style={{backgroundImage: "url(channels4_profile.jpg)"}}></div>
             <div className={styles.text}>
                 <h2 ref={targetRef} className={`${isVisible ? styles.fadedIn : styles.fadedOut}`}>YouTube</h2>
-                YouTube is very cool and I am also very cool. Also, please subscribe and like because I am very cool and so is my video. Maybe, one day, I will be rich with this. Then, I wouldn't have to bother with doing stuff for other people that I don't care about.
+                { /* eslint-disable-next-line react/no-unescaped-entities*/ } 
+                YouTube is very cool and I am also very cool. Also, please subscribe and like because I am very cool and so is my video. There, I also do very cool programming stuff because I am cool. Please also comment for the algorithm and so.
             </div>
         </div>
 

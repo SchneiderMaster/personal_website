@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./scrollbar.module.css";
 
-export default function Scrollbar({ current }){
+export default function Scrollbar({ current }: any){
 
     return(
     <div className={styles.bar}>

@@ -27,6 +27,10 @@ export default function Home() {
   }
 
 
+
+  useEffect(() => {
+
+
   function updateBlobPosition(index: number, xOffset: number, yOffset: number, useAbsolutePosition: boolean){
     setPositions(prevPositions => {
       const newPositions = [...prevPositions];
@@ -48,20 +52,18 @@ export default function Home() {
 
   }
 
-  useEffect(() => {
-
     for (let i = 0; i < positions.length; i++) {
       setInterval(() => updateBlobPosition(i, _.random(-2, 2), _.random(-2, 2), false), 100);
 
     }
-  }, []);
+  }, [positions.length]);
 
 
   return (
     <main className={styles.main}>
       {/* <Scrollbar current={9}/> */}
       {positions.map((position, index) => (
-        <BlurryBlob xpos={position.left} ypos={position.top} width={position.width} height={position.height}></BlurryBlob>
+        <BlurryBlob key={index} xpos={position.left} ypos={position.top} width={position.width} height={position.height}></BlurryBlob>
       ))}
 
       <h1 className={styles.epic}>
@@ -81,8 +83,10 @@ export default function Home() {
         <CustomButton backgroundImage={"https://www.innersloth.com/wp-content/themes/innersloth/markup/assets/img/ico/ico-red-player.svg"} href={"https://www.innersloth.com/games/among-us/"}></CustomButton>
         <CustomButton backgroundImage={"https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/At_sign.svg/220px-At_sign.svg.png"} href={"mailto:pixelprodigy27@gmail.com"}></CustomButton>
       </div>
-      <p>Hi, this is a very long text to see how I'm going to style such big paragraphs and I actually don't know why I just don't simply use some lorem Ipsum generator. But this way, I can actually let my inner creativeness spark. I don't know what I'm writing right here. In deutsch we would say that this is "Geschwollene Scheiße". Dies ist das Wort zum * quickly checks watch * Freitag. <br/>Hi, this is a very long text to see how I'm going to style such big paragraphs and I actually don't know why I just don't simply use some lorem Ipsum generator. But this way, I can actually let my inner creativeness spark. I don't know what I'm writing right here. In deutsch we would say that this is "Geschwollene Scheiße". Dies ist das Wort zum * quickly checks watch * Freitag. <br/>Hi, this is a very long text to see how I'm going to style such big paragraphs and I actually don't know why I just don't simply use some lorem Ipsum generator. But this way, I can actually let my inner creativeness spark. I don't know what I'm writing right here. In deutsch we would say that this is "Geschwollene Scheiße". Dies ist das Wort zum * quickly checks watch * Freitag. <br/>Hi, this is a very long text to see how I'm going to style such big paragraphs and I actually don't know why I just don't simply use some lorem Ipsum generator. But this way, I can actually let my inner creativeness spark. I don't know what I'm writing right here. In deutsch we would say that this is "Geschwollene Scheiße". Dies ist das Wort zum * quickly checks watch * Freitag. <br/>Hi, this is a very long text to see how I'm going to style such big paragraphs and I actually don't know why I just don't simply use some lorem Ipsum generator. But this way, I can actually let my inner creativeness spark. I don't know what I'm writing right here. In deutsch we would say that this is "Geschwollene Scheiße". Dies ist das Wort zum * quickly checks watch * Freitag. <br/>Hi, this is a very long text to see how I'm going to style such big paragraphs and I actually don't know why I just don't simply use some lorem Ipsum generator. But this way, I can actually let my inner creativeness spark. I don't know what I'm writing right here. In deutsch we would say that this is "Geschwollene Scheiße". Dies ist das Wort zum * quickly checks watch * Freitag. <br/>Hi, this is a very long text to see how I'm going to style such big paragraphs and I actually don't know why I just don't simply use some lorem Ipsum generator. But this way, I can actually let my inner creativeness spark. I don't know what I'm writing right here. In deutsch we would say that this is "Geschwollene Scheiße". Dies ist das Wort zum * quickly checks watch * Freitag. <br/>Hi, this is a very long text to see how I'm going to style such big paragraphs and I actually don't know why I just don't simply use some lorem Ipsum generator. But this way, I can actually let my inner creativeness spark. I don't know what I'm writing right here. In deutsch we would say that this is "Geschwollene Scheiße". Dies ist das Wort zum * quickly checks watch * Freitag. <br/>Hi, this is a very long text to see how I'm going to style such big paragraphs and I actually don't know why I just don't simply use some lorem Ipsum generator. But this way, I can actually let my inner creativeness spark. I don't know what I'm writing right here. In deutsch we would say that this is "Geschwollene Scheiße". Dies ist das Wort zum * quickly checks watch * Freitag. <br/>Hi, this is a very long text to see how I'm going to style such big paragraphs and I actually don't know why I just don't simply use some lorem Ipsum generator. But this way, I can actually let my inner creativeness spark. I don't know what I'm writing right here. In deutsch we would say that this is "Geschwollene Scheiße". Dies ist das Wort zum * quickly checks watch * Freitag.</p>
-      <Card></Card>
+      { /* eslint-disable-next-line react/no-unescaped-entities */ }
+      <p> Lorem ipsum </p>
+        
+              <Card></Card>
     </main>
   );
 }

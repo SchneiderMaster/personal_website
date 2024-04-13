@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './custom-button.module.css';
 
-export default function CustomButton({ backgroundImage, href }) {
+export default function CustomButton({ backgroundImage, href } :any) {
 
     const [mousePosition, setMousePosition] = useState({x: 0, y: 0});
     const anchorRef = useRef<HTMLAnchorElement>(null);
