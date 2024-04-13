@@ -3,17 +3,27 @@ import { initializeApp } from 'firebase/app';
 import Script from 'next/script';
 import "@/styles/globals.css"
 import React from 'react';
+import { collection, getDocs, getFirestore } from 'firebase/firestore';
+
+let db;
 
 // Check if window is defined (i.e., if the code is running on the client-side)
 if (typeof window !== 'undefined') {
   // Initialize Firebase only on the client-side
   const app = initializeApp(firebaseConfig);
-  
+  db = getFirestore(app);
   // If you need analytics, you can initialize it here as well
   // const analytics = getAnalytics(app);
 
   // You can also initialize other Firebase services here if needed
 }
+
+
+const res = await getDocs(collection(db, "issues"));
+
+res.forEach((doc) => {
+  console.log(doc.data());
+});
 
 export default function RootLayout({
   children,

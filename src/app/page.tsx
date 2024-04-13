@@ -8,6 +8,7 @@ import Card from "./card";
 import Navbar from "./navbar";
 import React from "react";
 import { clamp } from "../helpers/clamp";
+import React from "react";
 
 export default function Home() {
 
