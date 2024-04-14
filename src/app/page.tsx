@@ -1,13 +1,10 @@
 import styles from "@/styles/page.module.css";
-import Scrollbar from "./scrollbar";
 import BlurryBlob from "./blurryblob"
-import { useEffect, useState } from "react";
 import _ from 'lodash';
 import CustomButton from "./custom-button";
 import Card from "./card";
 import Navbar from "./navbar";
 import React from "react";
-import { clamp } from "../helpers/clamp";
 
 export default function Home() {
 

@@ -13,7 +13,6 @@ export default function Card() {
       ([entry]) => {
         if(targetRef.current){
           setIsVisible(entry.isIntersecting || targetRef.current.getBoundingClientRect().top <= window.innerHeight/5);
-          console.log(targetRef.current.getBoundingClientRect().top + "; " + window.innerHeight/5);
       }
       },
       { threshold: 1 }
