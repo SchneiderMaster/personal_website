@@ -22,24 +22,6 @@ export default function Home() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   return (
     <main className={styles.main}>
       <Navbar useSliding={true}></Navbar>

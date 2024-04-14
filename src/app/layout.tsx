@@ -13,6 +13,7 @@ if (typeof window !== 'undefined') {
   // Initialize Firebase only on the client-side
   const app = initializeApp(firebaseConfig);
   db = getFirestore(app);
+
   // If you need analytics, you can initialize it here as well
   // const analytics = getAnalytics(app);
 
