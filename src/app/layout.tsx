@@ -55,7 +55,7 @@ export default function RootLayout({
     <Script defer src="/__/firebase/10.11.0/firebase-analytics-compat.js"></Script>
     <Script defer src="/__/firebase/10.11.0/firebase-remote-config-compat.js"></Script>
     <Script defer src="/__/firebase/10.11.0/firebase-performance-compat.js"></Script>
-    <Script defer src="/__/firebase/init.js?useEmulator=true"></Script>
+    <Script defer src="/__/firebase/init.js"></Script>
 
 
       <Script src="https://apis.google.com/js/platform.js" async defer></Script>
