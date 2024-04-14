@@ -5,7 +5,6 @@ import "@/styles/globals.css"
 import React from 'react';
 import { collection, getDocs, getFirestore } from 'firebase/firestore';
 import { Metadata } from 'next';
-import React from 'react';
 
 let db;
 
