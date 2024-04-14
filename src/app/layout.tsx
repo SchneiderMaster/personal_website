@@ -1,31 +1,15 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "@/styles/globals.css";
 import { isSupported } from "firebase/analytics";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import Script from "next/script";
+import { initializeAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyB12kt3yDIDinw265Av8w2P8v8IwIlJneE",
-  authDomain: "schneider-tempo.firebaseapp.com",
-  projectId: "schneider-tempo",
-  storageBucket: "schneider-tempo.appspot.com",
-  messagingSenderId: "676575892424",
-  appId: "1:676575892424:web:1dfd689eb4120a6f7126fd",
-  measurementId: "G-L7QZSJEW0T"
-};
-
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = isSupported().then(yes => yes ? getAnalytics(app) : null);;
 
 
 
