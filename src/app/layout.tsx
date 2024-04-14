@@ -4,6 +4,8 @@ import Script from 'next/script';
 import "@/styles/globals.css"
 import React from 'react';
 import { collection, getDocs, getFirestore } from 'firebase/firestore';
+import { Metadata } from 'next';
+import React from 'react';
 
 let db;
 
@@ -18,12 +20,23 @@ if (typeof window !== 'undefined') {
   // You can also initialize other Firebase services here if needed
 }
 
+try
+{
 
 const res = await getDocs(collection(db, "issues"));
 
 res.forEach((doc) => {
   console.log(doc.data());
 });
+}
+catch{
+  console.log("no auth lol")
+}
+
+export const metadata: Metadata = {
+  title: "Schneider Tempo",
+  description: "A time logging website for personal use.",
+};
 
 export default function RootLayout({
   children,
