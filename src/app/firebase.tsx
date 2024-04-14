@@ -1,11 +1,11 @@
 // Your web app's Firebase configuration
-
+import firebase from "firebase/compat/app";
 import { getAnalytics, isSupported } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import { browserLocalPersistence, browserPopupRedirectResolver, browserSessionPersistence, getAuth, initializeAuth } from "firebase/auth";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+export const firebaseConfig = {
     apiKey: "AIzaSyB12kt3yDIDinw265Av8w2P8v8IwIlJneE",
     authDomain: "schneider-tempo.firebaseapp.com",
     projectId: "schneider-tempo",
@@ -17,8 +17,8 @@ const firebaseConfig = {
   
   
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = isSupported().then(yes => yes ? getAnalytics(app) : null);;
+  export const app = initializeApp(firebaseConfig);
+  export const analytics = isSupported().then(yes => yes ? getAnalytics(app) : null);;
   // export const auth = initializeAuth(app, {persistence: browserLocalPersistence, popupRedirectResolver: browserPopupRedirectResolver});
 
   export const auth = getAuth(app);

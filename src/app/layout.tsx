@@ -1,47 +1,19 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "@/styles/globals.css";
-import { isSupported } from "firebase/analytics";
+import { firebaseConfig } from './firebase';
+import { initializeApp } from 'firebase/app';
+import Script from 'next/script';
+import "@/styles/globals.css"
+import React from 'react';
 
-import "firebase/firestore";
+// Check if window is defined (i.e., if the code is running on the client-side)
+if (typeof window !== 'undefined') {
+  // Initialize Firebase only on the client-side
+  const app = initializeApp(firebaseConfig);
+  
+  // If you need analytics, you can initialize it here as well
+  // const analytics = getAnalytics(app);
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
-import Script from "next/script";
-import { initializeAuth } from "firebase/auth";
-import React from "react";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-
-try
-{
-  const res = await getDocs(collection(db, "issues"));
-
-
-res.forEach((doc) => {
-  console.log(doc.data());
-});
+  // You can also initialize other Firebase services here if needed
 }
-catch{
-  console.log("no auth lol")
-}
-
-const res = await getDocs(collection(db, "issues"));
-
-res.forEach((doc) => {
-  console.log(doc.data());
-});
-
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Schneider Tempo",
-  description: "A time logging website for personal use.",
-};
 
 export default function RootLayout({
   children,
@@ -50,24 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-    
-    <Script defer src="/__/firebase/10.11.0/firebase-app-compat.js"></Script>
-    <Script defer src="/__/firebase/10.11.0/firebase-auth-compat.js"></Script>
-    <Script defer src="/__/firebase/10.11.0/firebase-database-compat.js"></Script>
-    <Script defer src="/__/firebase/10.11.0/firebase-firestore-compat.js"></Script>
-    <Script defer src="/__/firebase/10.11.0/firebase-functions-compat.js"></Script>
-    <Script defer src="/__/firebase/10.11.0/firebase-messaging-compat.js"></Script>
-    <Script defer src="/__/firebase/10.11.0/firebase-storage-compat.js"></Script>
-    <Script defer src="/__/firebase/10.11.0/firebase-analytics-compat.js"></Script>
-    <Script defer src="/__/firebase/10.11.0/firebase-remote-config-compat.js"></Script>
-    <Script defer src="/__/firebase/10.11.0/firebase-performance-compat.js"></Script>
-    <Script defer src="/__/firebase/init.js"></Script>
-
-
+      {/* Include other scripts as needed */}
       <Script src="https://apis.google.com/js/platform.js" async defer></Script>
       <meta name="google-signin-client_id" content="911079370304-2u99bp5ef59s8dl16a97gslt5dp7fgpm.apps.googleusercontent.com.apps.googleusercontent.com"></meta>
-
-      <body className={inter.className}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
