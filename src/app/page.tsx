@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import _ from 'lodash';
 import CustomButton from "./custom-button";
 import Card from "./card";
+import Navbar from "./navbar";
 
 export default function Home() {
 
@@ -61,7 +62,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      {/* <Scrollbar current={9}/> */}
+      <Navbar></Navbar>
       {positions.map((position, index) => (
         <BlurryBlob key={index} xpos={position.left} ypos={position.top} width={position.width} height={position.height}></BlurryBlob>
       ))}
