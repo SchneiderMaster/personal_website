@@ -31,13 +31,17 @@ export const analytics = isSupported().then(yes => yes ? getAnalytics(app) : nul
 export const db = getFirestore(app);
 
 
+try
+{
+  const res = await getDocs(collection(db, "issues"));
 
-const res = await getDocs(collection(db, "issues"));
-
-res.forEach((doc) => {
-  console.log(doc.data());
-});
-
+  res.forEach((doc) => {
+    console.log(doc.data());
+  });
+}
+catch{
+  console.log("no auth lol")
+}
 
 const inter = Inter({ subsets: ["latin"] });
 
