@@ -7,6 +7,7 @@ import { signInWithPopup } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth/cordova";
 import { auth } from "./firebase";
 import LoginButton from "./login-button";
+import Link from "next/link";
 
 export default function Navbar({useSliding}: any){
 
@@ -29,12 +30,12 @@ export default function Navbar({useSliding}: any){
 
     return (
         <div className={ `${styles.navbar}`} style={{top: navbarPosition + "vh", opacity: (navbarPosition+10)/10}}>
-            <a href="/">
+            <Link href="/">
           Home
-        </a>
-        <a href="/test">
+        </Link>
+        <Link href="/test">
           testing lol
-        </a>
+        </Link>
 
         <LoginButton></LoginButton>
 
