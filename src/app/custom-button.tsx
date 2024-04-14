@@ -1,5 +1,7 @@
+"use client"
+
 import React, { useEffect, useRef, useState } from 'react';
-import styles from './custom-button.module.css';
+import styles from '@/styles/custom-button.module.css';
 
 export default function CustomButton({ backgroundImage, href } :any) {
 
