@@ -1,6 +1,7 @@
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
 import React from "react";
 import { auth } from "./firebase";
+import { addDoc } from "firebase/firestore";
 
 export default function LoginButton(){
 
@@ -12,6 +13,8 @@ export default function LoginButton(){
             onAuthStateChanged(auth, (user) => {
                 if(user) {
                     console.log(user);
+
+
                 }
         
             })
