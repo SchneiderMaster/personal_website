@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./scrollbar.module.css";
+import styles from "@/styles/scrollbar.module.css";
 
 export default function Scrollbar({ current }: any){
 
