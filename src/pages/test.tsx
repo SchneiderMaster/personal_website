@@ -43,8 +43,10 @@ export default function Test() {
 	};
 
 	useEffect(() => {
-		fetchProjects();
-	});
+		onAuthStateChanged(auth, () => {
+			fetchProjects();
+		});
+	}, []);
 
 	const [inputValues, setInputValues] = useState(["", "", ""]);
 	const [inputValues1, setInputValues1] = useState(["", "", ""]);

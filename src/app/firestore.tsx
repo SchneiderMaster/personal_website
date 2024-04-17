@@ -142,6 +142,9 @@ export async function getAllProjects() {
 			});
 
 			return projects;
+		} else {
+			console.log("You aren't signed in.");
+			return null;
 		}
 	} catch (err) {
 		console.log(err);
