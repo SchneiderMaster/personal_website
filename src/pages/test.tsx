@@ -28,6 +28,8 @@ export default function Test() {
 
 	const [issue, setIssue] = useState<string>("");
 
+	const [comment, setComment] = useState<string>("");
+
 	const fetchIssues = async (projectId: string) => {
 		const snapshot = await getAllIssues(projectId);
 		if (snapshot) {
@@ -190,9 +192,22 @@ export default function Test() {
 					}
 				}}></input>
 
+			<input
+				type="text"
+				onChange={(e) => {
+					if (e.currentTarget.value) {
+						setComment(e.currentTarget.value);
+					}
+				}}></input>
+
 			<button
 				onClick={() => {
-					createWorklog(issue, selectedDate, selectedDuration);
+					createWorklog(
+						issue,
+						selectedDate,
+						selectedDuration,
+						comment
+					);
 				}}>
 				Add worklog
 			</button>

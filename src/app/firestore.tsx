@@ -2,6 +2,7 @@ import {
 	DocumentData,
 	QueryDocumentSnapshot,
 	QuerySnapshot,
+	addDoc,
 	collection,
 	doc,
 	getDoc,
@@ -154,9 +155,21 @@ export async function getAllProjects() {
 export async function createWorklog(
 	issueId: string,
 	startDate: Date,
-	duration: number
+	duration: number,
+	comment: string
 ) {
 	try {
+		if (auth.currentUser) {
+			await addDoc(
+				collection(db, "users", auth.currentUser.uid, "worklogs"),
+				{
+					startDate: startDate,
+					duration: duration,
+					issueId: issueId,
+					comment: comment,
+				}
+			);
+		}
 	} catch (err) {
 		console.log(err);
 	}
