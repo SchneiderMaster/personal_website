@@ -1,11 +1,11 @@
 name: Notify on successful deployment
-on:
+'on':
   workflow_run:
     workflows: 
-      - " Deploy to Firebase Hosting on merge "
-      - " Deploy to Firebase Hosting on PR "
-#    types:
-#      - completed
+      - "Deploy to Firebase Hosting on merge"
+      - "Deploy to Firebase Hosting on PR"
+    types:
+      - completed
 
 jobs:
   notify:
