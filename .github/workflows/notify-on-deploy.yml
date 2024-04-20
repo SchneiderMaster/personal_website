@@ -2,8 +2,8 @@ name: Notify on successful deployment
 on:
   workflow_run:
     workflows: 
-      -"Deploy to Firebase Hosting on merge"
       - "Deploy to Firebase Hosting on PR"
+      - "Deploy to Firebase Hosting on merge"
     types:
       - completed
 
@@ -11,7 +11,10 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Debugging Step
+        run: echo "This workflow was triggered"
       
+      - uses: actions/checkout@v2
+
       - name: Notify me
         run: curl -d "Successfully built and deployed Schneder-Tempo on main." -H "ta:rocket" ${{ secrets.NTFY_URL }}
