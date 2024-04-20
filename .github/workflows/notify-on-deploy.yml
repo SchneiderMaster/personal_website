@@ -7,7 +7,7 @@ on:
     types:
       - completed
     branches:
-      - '*'  # Trigger on all branches
+      - '*'  # Trigger on all branches this is dumb
 
 jobs:
   notify:
