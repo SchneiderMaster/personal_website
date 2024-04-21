@@ -59,7 +59,7 @@ export default function TimeTable() {
 
 						key={worklogDivs.length-1}
 					style={{
-						height: `${clamp(1, floor((mousePosition.y-worklogPoss[worklogDivs.length-1][1])/15), 10000)*15}px`,
+						height: `${clamp(1, floor((mousePosition.y+window.scrollY-worklogPoss[worklogDivs.length-1][1])/15), 10000)*15}px`,
 						top: `${worklogPoss[worklogDivs.length-1][1]}px`,
 						left: `${worklogPoss[worklogDivs.length-1][0]}px`,
 					}}>
@@ -99,7 +99,7 @@ export default function TimeTable() {
 						if(e.button === 0){
 						setDragging(true);
 						let pos = e.currentTarget.getBoundingClientRect();
-						createSingleDiv(pos.left, pos.top);
+						createSingleDiv(pos.left, pos.top + window.scrollY);
 
 						console.log(pos.x, pos.y);
 						}
