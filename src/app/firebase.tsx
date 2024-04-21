@@ -2,7 +2,8 @@
 import firebase from "firebase/compat/app";
 import { getAnalytics, isSupported } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
-import { browserLocalPersistence, browserPopupRedirectResolver, browserSessionPersistence, getAuth, initializeAuth } from "firebase/auth";
+import { browserLocalPersistence, browserPopupRedirectResolver, browserSessionPersistence, getAuth, initializeAuth, setPersistence } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 export const firebaseConfig = {
@@ -22,4 +23,6 @@ export const firebaseConfig = {
   // export const auth = initializeAuth(app, {persistence: browserLocalPersistence, popupRedirectResolver: browserPopupRedirectResolver});
 
   export const auth = getAuth(app);
+
+  export const db = getFirestore(app)
   

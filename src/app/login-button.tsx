@@ -1,7 +1,7 @@
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
 import React from "react";
-import { auth } from "./firebase";
-import { addDoc } from "firebase/firestore";
+import { auth, db } from "./firebase";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 
 export default function LoginButton(){
 
@@ -10,9 +10,19 @@ export default function LoginButton(){
 
     function handleLogin() {
         signInWithPopup(auth, new GoogleAuthProvider).then(() => {
-            onAuthStateChanged(auth, (user) => {
+            onAuthStateChanged(auth, async (user) => {
                 if(user) {
-                    console.log(user);
+                    try{
+                        const docRef = await setDoc(doc(db, "users", user.uid), {
+                            name: user.displayName
+                        })
+
+                    }
+
+                    catch (err)
+                    {
+                        console.log(err);
+                    }
 
 
                 }

@@ -1,18 +1,51 @@
-import { firebaseConfig } from './firebase';
+import { auth, firebaseConfig } from './firebase';
 import { initializeApp } from 'firebase/app';
 import Script from 'next/script';
 import "@/styles/globals.css"
+import React from 'react';
+import { collection, getDocs, getFirestore } from 'firebase/firestore';
+import { Metadata } from 'next';
+import { browserSessionPersistence, setPersistence } from 'firebase/auth';
+
+let db;
 
 // Check if window is defined (i.e., if the code is running on the client-side)
 if (typeof window !== 'undefined') {
   // Initialize Firebase only on the client-side
   const app = initializeApp(firebaseConfig);
-  
+  db = getFirestore(app);
+
+  setPersistence(auth, browserSessionPersistence);
+
+
+  console.log("hi")
+
+  try{
+
+    const res = await getDocs(collection(db, "issues"));
+
+    res.forEach((doc) => {
+      console.log(doc.data());
+    });
+  }
+  catch{
+    console.log("no auth lol")
+  }
+
+
   // If you need analytics, you can initialize it here as well
   // const analytics = getAnalytics(app);
 
   // You can also initialize other Firebase services here if needed
 }
+
+console.log(db)
+
+
+export const metadata: Metadata = {
+  title: "Schneider Tempo",
+  description: "A time logging website for personal use.",
+};
 
 export default function RootLayout({
   children,
