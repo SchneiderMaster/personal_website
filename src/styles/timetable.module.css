@@ -42,3 +42,7 @@
 .cell:hover > .cellText {
 	opacity: 1;
 }
+
+.fullHour {
+	border-top-color: #333;
+}
