@@ -46,3 +46,12 @@
 .fullHour {
 	border-top-color: #333;
 }
+
+.worklog {
+	position: absolute;
+	width: calc(100%/7);
+	background-color: #5e27cc;
+	z-index: 1000;
+	overflow: hidden;
+	pointer-events: none;
+}

@@ -2,6 +2,9 @@ import React, { Ref, useEffect, useRef, useState } from "react";
 import styles from "@/styles/timetable.module.css";
 import "@/styles/globals.css";
 import Navbar from "@/app/navbar";
+import useMousePosition from "@/helpers/useMousePosition";
+import { clamp } from "@/helpers/clamp";
+import { floor } from "lodash";
 
 export default function TimeTable() {
 	function getTime(minutes: number) {
@@ -14,41 +17,71 @@ export default function TimeTable() {
 
 	const [dragging, setDragging] = useState<boolean>(false);
 
+	const currentTimer = useRef<any>(null);
+
+	const mousePosition = useMousePosition(true);
+
+	const [worklogPoss, setWorklogPoss] = useState<number[][]>([]);
+
 	function createSingleDiv(left: number, top: number) {
 		let tempDivs = [...worklogDivs];
+		let tempPoss = [...worklogPoss];
 		tempDivs.push(
 			<div
+				key={tempDivs.length}
+				className={styles.worklog}
 				style={{
-					position: "absolute",
 					top: `${top}px`,
 					left: `${left}px`,
-					width: "200px",
-					height: `${15 * 1}px`,
-					backgroundColor: "#5e27cc",
-					zIndex: 100,
-					overflow: "hidden",
+					height: `${15}px`,
 				}}>
 				TE-0
 			</div>
 		);
+
+		tempPoss.push([left, top]);
+
+		setWorklogPoss(tempPoss);
 		setWorklogDivs(tempDivs);
 	}
 
 	useEffect(() => {
-		const whileDragging = () => {
-			const intervalId = setInterval(() => {
-				console.log("dragging");
-				if (!dragging) {
-					clearInterval(intervalId);
+
+		const startTimer = () => {
+			currentTimer.current = setInterval(() => {
+				if(mousePosition.y){
+					
+
+					let test = [... worklogDivs];
+					test[worklogDivs.length-1] = 
+					<div
+						className={styles.worklog}
+
+						key={worklogDivs.length-1}
+					style={{
+						height: `${clamp(1, floor((mousePosition.y-worklogPoss[worklogDivs.length-1][1])/15), 10000)*15}px`,
+						top: `${worklogPoss[worklogDivs.length-1][1]}px`,
+						left: `${worklogPoss[worklogDivs.length-1][0]}px`,
+					}}>
+					TE-0
+				</div>
+
+				setWorklogDivs(test);
 				}
+
+
+
 			}, 10);
-			return () => clearInterval(intervalId);
-		};
+		}
 
 		if (dragging) {
-			whileDragging();
+			startTimer();
 		}
-	}, [dragging]);
+		else {
+			clearInterval(currentTimer.current);
+		}
+		return () => clearInterval(currentTimer.current);
+	}, [dragging, mousePosition, worklogDivs, worklogPoss]);
 
 	function generateDivs(): JSX.Element[] {
 		const divs: JSX.Element[] = [];
@@ -62,15 +95,20 @@ export default function TimeTable() {
 					}`}
 					key={i}
 					onMouseDown={(e) => {
+						console.log(e.button);
+						if(e.button === 0){
 						setDragging(true);
 						let pos = e.currentTarget.getBoundingClientRect();
 						createSingleDiv(pos.left, pos.top);
 
 						console.log(pos.x, pos.y);
+						}
 					}}
-					onMouseUp={() => {
+					onMouseUp={(e) => {
+					if(e.button === 0){
 						console.log("up");
 						setDragging(false);
+					}
 					}}
 					// onMouseDown={(e) => {
 					// 	console.log(e.clientX, e.clientY);
