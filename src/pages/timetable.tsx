@@ -23,6 +23,15 @@ export default function TimeTable() {
 
 	const [worklogPoss, setWorklogPoss] = useState<number[][]>([]);
 
+	let startTime = useRef(0);
+
+	let stopTime = useRef(0);
+
+	function getDuration(start:number, stop:number) {
+		const value = Math.floor((stop-start)/7) * 900;		
+		return value != 0 ? value : 900;
+	}
+
 	function createSingleDiv(left: number, top: number) {
 		let tempDivs = [...worklogDivs];
 		let tempPoss = [...worklogPoss];
@@ -95,24 +104,23 @@ export default function TimeTable() {
 					}`}
 					key={i}
 					onMouseDown={(e) => {
-						console.log(e.button);
 						if(e.button === 0){
 						setDragging(true);
 						let pos = e.currentTarget.getBoundingClientRect();
 						createSingleDiv(pos.left, pos.top + window.scrollY);
 
-						console.log(pos.x, pos.y);
-						}
+						startTime.current = i;
+					}
 					}}
 					onMouseUp={(e) => {
 					if(e.button === 0){
 						console.log("up");
 						setDragging(false);
+						stopTime.current = i;
+
+						console.log(getDuration(startTime.current, stopTime.current));
 					}
 					}}
-					// onMouseDown={(e) => {
-					// 	console.log(e.clientX, e.clientY);
-					// }}
 				>
 					<div className={styles.cellText}>
 						{getTime(Math.floor(i / 7) * 15)}
