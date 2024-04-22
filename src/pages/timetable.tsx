@@ -5,6 +5,7 @@ import Navbar from "@/app/navbar";
 import useMousePosition from "@/helpers/useMousePosition";
 import { clamp } from "@/helpers/clamp";
 import { floor } from "lodash";
+import { CreateIssue } from "@/app/create-issue";
 
 export default function TimeTable() {
 	function getTime(minutes: number) {
@@ -26,6 +27,8 @@ export default function TimeTable() {
 	let startTime = useRef(0);
 
 	let stopTime = useRef(0);
+
+	const [duration, setDuration] = useState<number>(0);
 
 	function getDuration(start:number, stop:number) {
 		const value = Math.floor((stop-start)/7) * 900;		
@@ -92,6 +95,13 @@ export default function TimeTable() {
 		return () => clearInterval(currentTimer.current);
 	}, [dragging, mousePosition, worklogDivs, worklogPoss]);
 
+
+
+	function openCreation(duration: number) {
+		setDuration(duration);
+		console.log(duration);
+	}
+
 	function generateDivs(): JSX.Element[] {
 		const divs: JSX.Element[] = [];
 		const totalDivs = 96 * 7; // Total number of divs required
@@ -118,7 +128,7 @@ export default function TimeTable() {
 						setDragging(false);
 						stopTime.current = i;
 
-						console.log(getDuration(startTime.current, stopTime.current));
+						openCreation(getDuration(startTime.current, stopTime.current));
 					}
 					}}
 				>
@@ -134,6 +144,7 @@ export default function TimeTable() {
 
 	return (
 		<main className={styles.main}>
+			<CreateIssue duration={duration} style={{display: `${duration == 0 ? "none" : "flex"}`}}></CreateIssue>
 			<Navbar></Navbar>
 			<div>Also Hi, lol</div>
 

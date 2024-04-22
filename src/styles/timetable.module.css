@@ -54,4 +54,6 @@
 	z-index: 1000;
 	overflow: hidden;
 	pointer-events: none;
+	border-radius: 10px;
+	padding: 5px 7px 7px 7px;
 }
