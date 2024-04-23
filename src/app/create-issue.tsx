@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "@/styles/create-issue.module.css";
 import { createWorklog, getAllIssues, getAllProjects } from "./firestore";
 import { QueryDocumentSnapshot } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
-export function CreateIssue({duration}:any) {
+import TimeTable from "@/pages/timetable";
+export function CreateIssue({duration_}:any) {
 
+	const [duration, setDuration] = useState<number>(duration_);
 
     const [issues, setIssues] = useState<QueryDocumentSnapshot[]>([]);
 
@@ -20,11 +22,16 @@ export function CreateIssue({duration}:any) {
     const [comment, setComment] = useState<string>("");
 
 
+
     useEffect(() => {
 		onAuthStateChanged(auth, () => {
 			fetchProjects();
 		});
 	}, []);
+
+	useEffect(() => {
+		setDuration(duration_);
+	}, [duration_]);
 
 
     const fetchIssues = async (projectId: string) => {
@@ -43,21 +50,15 @@ export function CreateIssue({duration}:any) {
 
 
     return(
-        <div className={styles.main}>
+        <div className={styles.main}  style={{display: `${duration === 0 ? "none" : "flex"}`}}>
 
             <div className={styles.center}>
 
                 <h2>Log time on an issue</h2>
 
-
-
-
-
-
                 <select
 				onChange={(e) => {
 					fetchIssues(e.currentTarget.value);
-					// might be buggy since we're using the same state as below for the search, but will be seperated anyways, so don't care
 				}}>
 				<option key={0} value={""}></option>
 				{projects.map((project, index) => (
@@ -89,6 +90,7 @@ export function CreateIssue({duration}:any) {
 
 			<input
 				type="number"
+				value={duration}
 				onChange={(e) => {
 					if (e.currentTarget.valueAsNumber) {
 						setSelectedDuration(e.currentTarget.valueAsNumber);
@@ -111,6 +113,8 @@ export function CreateIssue({duration}:any) {
 						selectedDuration,
 						comment
 					);
+					setDuration(0);
+					duration_ = 0;
 				}}>
 				Add worklog
 			</button>

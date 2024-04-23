@@ -113,6 +113,9 @@ export default function TimeTable() {
 						Math.floor(i / 7) % 4 === 0 ? styles.fullHour : ""
 					}`}
 					key={i}
+					onMouseOver={() => {
+						setDuration(0);
+					}}
 					onMouseDown={(e) => {
 						if(e.button === 0){
 						setDragging(true);
@@ -144,7 +147,7 @@ export default function TimeTable() {
 
 	return (
 		<main className={styles.main}>
-			<CreateIssue duration={duration} style={{display: `${duration == 0 ? "none" : "flex"}`}}></CreateIssue>
+			<CreateIssue duration_={duration}></CreateIssue>
 			<Navbar></Navbar>
 			<div>Also Hi, lol</div>
 
