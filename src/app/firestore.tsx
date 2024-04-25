@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { app, auth, db } from "./firebase";
 import { getAuth, initializeAuth, onAuthStateChanged } from "firebase/auth";
+import { endOfWeek, startOfWeek } from "date-fns";
 
 export async function createIssue(
 	title: string,
@@ -169,6 +170,35 @@ export async function createWorklog(
 					comment: comment,
 				}
 			);
+		}
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+export async function getWorklogsForWeek(date: Date) {
+	const start = startOfWeek(date, {weekStartsOn: 1});
+	const end = endOfWeek(date, {weekStartsOn: 1});
+
+	try{
+		if (auth.currentUser){
+			const querySnapshot = await getDocs(
+				query(
+					collection(db, "users", auth.currentUser.uid, "worklogs"),
+					where("startDate", ">=", start),
+					where("startDate", "<=", end)
+				)
+			);
+			const worklogs: QueryDocumentSnapshot[] = [];
+
+			querySnapshot.forEach((doc) => {
+				worklogs.push(doc);
+			});
+
+			return worklogs;
+		} else {
+			console.log("You aren't signed in.");
+			return null;
 		}
 	} catch (err) {
 		console.log(err);

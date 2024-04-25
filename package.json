@@ -10,6 +10,7 @@
     "deploy": "next build && firebase deploy"
   },
   "dependencies": {
+    "date-fns": "^3.6.0",
     "firebase": "^10.11.0",
     "lodash": "^4.17.21",
     "next": "^14.1.4",

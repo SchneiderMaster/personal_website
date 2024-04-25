@@ -26,11 +26,13 @@ export function CreateIssue({duration_}:any) {
     useEffect(() => {
 		onAuthStateChanged(auth, () => {
 			fetchProjects();
+
 		});
 	}, []);
 
 	useEffect(() => {
 		setDuration(duration_);
+		setSelectedDuration(duration_);
 	}, [duration_]);
 
 
@@ -90,7 +92,7 @@ export function CreateIssue({duration_}:any) {
 
 			<input
 				type="number"
-				value={duration}
+				placeholder={duration.toString()}
 				onChange={(e) => {
 					if (e.currentTarget.valueAsNumber) {
 						setSelectedDuration(e.currentTarget.valueAsNumber);
@@ -107,14 +109,18 @@ export function CreateIssue({duration_}:any) {
 
 			<button
 				onClick={() => {
+					console.log(selectedDuration);
 					createWorklog(
 						issue,
 						selectedDate,
 						selectedDuration,
 						comment
-					);
+					).then(() => {
+
 					setDuration(0);
 					duration_ = 0;
+
+					})
 				}}>
 				Add worklog
 			</button>

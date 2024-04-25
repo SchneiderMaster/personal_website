@@ -6,6 +6,10 @@ import useMousePosition from "@/helpers/useMousePosition";
 import { clamp } from "@/helpers/clamp";
 import { floor } from "lodash";
 import { CreateIssue } from "@/app/create-issue";
+import { QueryDocumentSnapshot } from "firebase/firestore";
+import { getWorklogsForWeek } from "@/app/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/app/firebase";
 
 export default function TimeTable() {
 	function getTime(minutes: number) {
@@ -24,6 +28,8 @@ export default function TimeTable() {
 
 	const [worklogPoss, setWorklogPoss] = useState<number[][]>([]);
 
+	const [worklogs, setWorklogs] = useState<QueryDocumentSnapshot[]>();
+
 	let startTime = useRef(0);
 
 	let stopTime = useRef(0);
@@ -35,27 +41,27 @@ export default function TimeTable() {
 		return value != 0 ? value : 900;
 	}
 
-	function createSingleDiv(left: number, top: number) {
-		let tempDivs = [...worklogDivs];
-		let tempPoss = [...worklogPoss];
-		tempDivs.push(
-			<div
-				key={tempDivs.length}
-				className={styles.worklog}
-				style={{
-					top: `${top}px`,
-					left: `${left}px`,
-					height: `${15}px`,
-				}}>
-				TE-0
-			</div>
-		);
-
-		tempPoss.push([left, top]);
-
-		setWorklogPoss(tempPoss);
-		setWorklogDivs(tempDivs);
-	}
+	function createSingleDiv(left: number, top: number, id: string, key: string) {
+		setWorklogDivs((prevDivs) => [
+		  ...prevDivs,
+		  <div
+			key={key}
+			className={styles.worklog}
+			style={{
+			  top: `${top}px`,
+			  left: `${left}px`,
+			  height: `${15}px`,
+			}}
+		  >
+			{id}
+		  </div>
+		]);
+	  
+		setWorklogPoss((prevPoss) => [
+		  ...prevPoss,
+		  [left, top]
+		]);
+	  }
 
 	useEffect(() => {
 
@@ -96,10 +102,33 @@ export default function TimeTable() {
 	}, [dragging, mousePosition, worklogDivs, worklogPoss]);
 
 
+	const fetchWorklogs = async () => {
+		const snapshot = await getWorklogsForWeek(new Date());
+		if(snapshot){
+			setWorklogs(snapshot);
+		} 
+	}
+
+	useEffect(() => {
+		onAuthStateChanged(auth, () => {
+			fetchWorklogs();
+		});
+	}, [])
+
+	useEffect(() => {
+		console.log(worklogs?.length)
+		if(worklogs){
+			worklogs.forEach((worklog, index) => {
+				console.log(worklog.data().issueId)
+				createSingleDiv(index *200, index *300, worklog.data().issueId, worklog.id.toString());
+			})
+		}
+
+	}, [worklogs])
+
 
 	function openCreation(duration: number) {
 		setDuration(duration);
-		console.log(duration);
 	}
 
 	function generateDivs(): JSX.Element[] {
@@ -120,14 +149,13 @@ export default function TimeTable() {
 						if(e.button === 0){
 						setDragging(true);
 						let pos = e.currentTarget.getBoundingClientRect();
-						createSingleDiv(pos.left, pos.top + window.scrollY);
+						createSingleDiv(pos.left, pos.top + window.scrollY, "test", worklogDivs.length.toString());
 
 						startTime.current = i;
 					}
 					}}
 					onMouseUp={(e) => {
 					if(e.button === 0){
-						console.log("up");
 						setDragging(false);
 						stopTime.current = i;
 
@@ -157,30 +185,6 @@ export default function TimeTable() {
 
 			<div className={styles.table}>
 				{generateDivs()}
-
-				{/* <div
-					style={{
-						backgroundColor: "#aaa",
-						gridArea: "4 / 2 / 12 / 2",
-						borderRadius: "10px",
-						margin: "1px 7px 3px 7px",
-						color: "#444",
-						padding: "5px 7px 7px 7px",
-					}}>
-					TE-0
-				</div>
-
-				<div
-					style={{
-						backgroundColor: "#aaa",
-						gridArea: "12 / 2 / 16 / 2",
-						borderRadius: "10px",
-						margin: "1px 7px 3px 7px",
-						color: "#444",
-						padding: "5px 7px 7px 7px",
-					}}>
-					TE-1
-				</div> */}
 			</div>
 		</main>
 	);
