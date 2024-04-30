@@ -45,7 +45,7 @@ export default function TimeTable() {
 		return value != 0 ? value : 900;
 	}
 
-	function createSingleDiv(left: number, top: number, id: string, key: string, height: number | undefined) {
+	function createSingleDiv(left: number, top: number, id: string, key: string, height: number | undefined, comment: string) {
 		setWorklogDivs((prevDivs) => [
 		  ...prevDivs,
 		  <div
@@ -58,6 +58,8 @@ export default function TimeTable() {
 			}}
 		  >
 			{id}
+			<br/>
+			{comment}
 		  </div>
 		]);
 	  
@@ -129,7 +131,7 @@ export default function TimeTable() {
 				const cellPos = tableCellsRefs.current[cellIndex]?.current?.getBoundingClientRect()
 				console.log(cellIndex + "; " + cellPos);
 				if(cellPos){
-					createSingleDiv((cellPos.x), (cellPos.y), worklog.data().issueId, worklog.id.toString(), worklog.data().duration/60);
+					createSingleDiv((cellPos.x), (cellPos.y), worklog.data().issueId, worklog.id.toString(), worklog.data().duration/60, worklog.data().comment);
 				}
 			})
 		}
@@ -159,7 +161,7 @@ export default function TimeTable() {
 						if(e.button === 0){
 						setDragging(true);
 						let pos = e.currentTarget.getBoundingClientRect();
-						createSingleDiv(pos.left, pos.top + window.scrollY, "test", worklogDivs.length.toString(), 15);
+						createSingleDiv(pos.left, pos.top + window.scrollY, "test", worklogDivs.length.toString(), 15, "...");
 
 						startTime.current = i;
 					}
