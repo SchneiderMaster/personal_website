@@ -176,7 +176,6 @@ export default function TimeTable() {
 				>
 					<div className={styles.cellText}>
 						{getTime(Math.floor(i / 7) * 15)}
-						{i}
 					</div>
 				</div>
 			);
