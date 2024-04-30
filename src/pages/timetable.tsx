@@ -1,4 +1,4 @@
-import React, { Ref, useEffect, useRef, useState } from "react";
+import React, { Ref, RefObject, useEffect, useRef, useState } from "react";
 import styles from "@/styles/timetable.module.css";
 import "@/styles/globals.css";
 import Navbar from "@/app/navbar";
@@ -20,6 +20,8 @@ export default function TimeTable() {
 
 	const [worklogDivs, setWorklogDivs] = useState<JSX.Element[]>([]);
 
+	const tableCells: JSX.Element[] = [];
+
 	const [dragging, setDragging] = useState<boolean>(false);
 
 	const currentTimer = useRef<any>(null);
@@ -36,12 +38,14 @@ export default function TimeTable() {
 
 	const [duration, setDuration] = useState<number>(0);
 
+	const tableCellsRefs = useRef<RefObject<HTMLDivElement>[]>([]);
+
 	function getDuration(start:number, stop:number) {
 		const value = Math.floor((stop-start)/7) * 900;		
 		return value != 0 ? value : 900;
 	}
 
-	function createSingleDiv(left: number, top: number, id: string, key: string) {
+	function createSingleDiv(left: number, top: number, id: string, key: string, height: number | undefined) {
 		setWorklogDivs((prevDivs) => [
 		  ...prevDivs,
 		  <div
@@ -50,7 +54,7 @@ export default function TimeTable() {
 			style={{
 			  top: `${top}px`,
 			  left: `${left}px`,
-			  height: `${15}px`,
+			  height: `${height ? height : 15}px`,
 			}}
 		  >
 			{id}
@@ -119,8 +123,14 @@ export default function TimeTable() {
 		console.log(worklogs?.length)
 		if(worklogs){
 			worklogs.forEach((worklog, index) => {
-				console.log(worklog.data().issueId)
-				createSingleDiv(index *200, index *300, worklog.data().issueId, worklog.id.toString());
+				const startDate: Date = worklog.data().startDate.toDate();
+
+				const cellIndex: number = (startDate.getHours()*60 +  startDate.getMinutes())/15*7 + startDate.getDay() -1;
+				const cellPos = tableCellsRefs.current[cellIndex]?.current?.getBoundingClientRect()
+				console.log(cellIndex + "; " + cellPos);
+				if(cellPos){
+					createSingleDiv((cellPos.x), (cellPos.y), worklog.data().issueId, worklog.id.toString(), worklog.data().duration/60);
+				}
 			})
 		}
 
@@ -132,11 +142,11 @@ export default function TimeTable() {
 	}
 
 	function generateDivs(): JSX.Element[] {
-		const divs: JSX.Element[] = [];
 		const totalDivs = 96 * 7; // Total number of divs required
 
 		for (let i = 0; i < totalDivs; i++) {
-			divs.push(
+			tableCellsRefs.current[i] = React.createRef();
+			tableCells.push(
 				<div
 					className={`${styles.cell} ${
 						Math.floor(i / 7) % 4 === 0 ? styles.fullHour : ""
@@ -149,7 +159,7 @@ export default function TimeTable() {
 						if(e.button === 0){
 						setDragging(true);
 						let pos = e.currentTarget.getBoundingClientRect();
-						createSingleDiv(pos.left, pos.top + window.scrollY, "test", worklogDivs.length.toString());
+						createSingleDiv(pos.left, pos.top + window.scrollY, "test", worklogDivs.length.toString(), 15);
 
 						startTime.current = i;
 					}
@@ -162,15 +172,17 @@ export default function TimeTable() {
 						openCreation(getDuration(startTime.current, stopTime.current));
 					}
 					}}
+					ref={tableCellsRefs.current[i]}
 				>
 					<div className={styles.cellText}>
 						{getTime(Math.floor(i / 7) * 15)}
+						{i}
 					</div>
 				</div>
 			);
 		}
 
-		return divs;
+		return tableCells;
 	}
 
 	return (

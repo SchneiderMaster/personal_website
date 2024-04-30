@@ -109,7 +109,7 @@ export function CreateIssue({duration_}:any) {
 
 			<button
 				onClick={() => {
-					console.log(selectedDuration);
+					console.log(selectedDate);
 					createWorklog(
 						issue,
 						selectedDate,
