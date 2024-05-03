@@ -131,7 +131,7 @@ export default function TimeTable() {
 				const cellPos = tableCellsRefs.current[cellIndex]?.current?.getBoundingClientRect()
 				console.log(cellIndex + "; " + cellPos);
 				if(cellPos){
-					createSingleDiv((cellPos.x), (cellPos.y), worklog.data().issueId, worklog.id.toString(), worklog.data().duration/60, worklog.data().comment);
+					createSingleDiv((cellPos.x), (cellPos.y + window.scrollY), worklog.data().issueId, worklog.id.toString(), worklog.data().duration/60, worklog.data().comment);
 				}
 			})
 		}
