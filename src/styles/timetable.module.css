@@ -27,7 +27,10 @@
 	transform: translate(-50%, -90%);
 	text-align: center;
 	opacity: 0;
-
+	background-color: #161616;
+	padding: 0 3px 0 3px;
+	border-radius: 50px;
+	border: 1.5px solid #777;
 	pointer-events: none;
 
 	user-select: none;

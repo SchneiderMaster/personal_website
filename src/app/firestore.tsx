@@ -136,7 +136,6 @@ export async function getAllProjects() {
 			const querySnapshot = await getDocs(
 				collection(db, "users", auth.currentUser.uid, "projects")
 			);
-			console.log("test");
 			const projects: QueryDocumentSnapshot[] = [];
 
 			querySnapshot.forEach((doc) => {

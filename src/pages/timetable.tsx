@@ -125,14 +125,12 @@ export default function TimeTable() {
 	}, [])
 
 	useEffect(() => {
-		console.log(worklogs?.length)
 		if(worklogs){
 			worklogs.forEach((worklog, index) => {
 				const startDate: Date = worklog.data().startDate.toDate();
 
 				const cellIndex: number = (startDate.getHours()*60 +  startDate.getMinutes())/15*7 + startDate.getDay() -1;
 				const cellPos = tableCellsRefs.current[cellIndex]?.current?.getBoundingClientRect()
-				console.log(cellIndex + "; " + cellPos);
 				if(cellPos){
 					createWorklogDiv((cellPos.x), (cellPos.y + window.scrollY), worklog.data().title, worklog.data().issueId, worklog.id.toString(), worklog.data().duration/60, worklog.data().comment);
 				}
