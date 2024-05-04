@@ -10,6 +10,7 @@ import { QueryDocumentSnapshot } from "firebase/firestore";
 import { getWorklogsForWeek } from "@/app/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/app/firebase";
+import { startOfWeek } from "date-fns";
 
 export default function TimeTable() {
 	function getTime(minutes: number) {
@@ -40,12 +41,14 @@ export default function TimeTable() {
 
 	const tableCellsRefs = useRef<RefObject<HTMLDivElement>[]>([]);
 
+	const [startDate, setStartDate] = useState<Date>(new Date());
+
 	function getDuration(start:number, stop:number) {
 		const value = Math.floor((stop-start)/7) * 900;		
 		return value != 0 ? value : 900;
 	}
 
-	function createSingleDiv(left: number, top: number, id: string, key: string, height: number | undefined, comment: string) {
+	function createWorklogDiv(left: number, top: number, title: string, id: string, key: string, height: number | undefined, comment: string) {
 		setWorklogDivs((prevDivs) => [
 		  ...prevDivs,
 		  <div
@@ -59,7 +62,7 @@ export default function TimeTable() {
 		  >
 			{id}
 			<br/>
-			{comment}
+			<div className={styles.comment}>{comment}</div>
 		  </div>
 		]);
 	  
@@ -87,7 +90,7 @@ export default function TimeTable() {
 						top: `${worklogPoss[worklogDivs.length-1][1]}px`,
 						left: `${worklogPoss[worklogDivs.length-1][0]}px`,
 					}}>
-					TE-0
+					New Issue
 				</div>
 
 				setWorklogDivs(test);
@@ -131,7 +134,7 @@ export default function TimeTable() {
 				const cellPos = tableCellsRefs.current[cellIndex]?.current?.getBoundingClientRect()
 				console.log(cellIndex + "; " + cellPos);
 				if(cellPos){
-					createSingleDiv((cellPos.x), (cellPos.y + window.scrollY), worklog.data().issueId, worklog.id.toString(), worklog.data().duration/60, worklog.data().comment);
+					createWorklogDiv((cellPos.x), (cellPos.y + window.scrollY), worklog.data().title, worklog.data().issueId, worklog.id.toString(), worklog.data().duration/60, worklog.data().comment);
 				}
 			})
 		}
@@ -139,11 +142,13 @@ export default function TimeTable() {
 	}, [worklogs])
 
 
-	function openCreation(duration: number) {
+	function openCreation(duration: number, start: Date) {
 		setDuration(duration);
+		setStartDate(start);
+		console.log(start);
 	}
 
-	function generateDivs(): JSX.Element[] {
+	function generateTimetableCells(): JSX.Element[] {
 		const totalDivs = 96 * 7; // Total number of divs required
 
 		for (let i = 0; i < totalDivs; i++) {
@@ -161,7 +166,7 @@ export default function TimeTable() {
 						if(e.button === 0){
 						setDragging(true);
 						let pos = e.currentTarget.getBoundingClientRect();
-						createSingleDiv(pos.left, pos.top + window.scrollY, "test", worklogDivs.length.toString(), 15, "...");
+						createWorklogDiv(pos.left, pos.top + window.scrollY, "", "New issue", worklogDivs.length.toString(), 15, "...");
 
 						startTime.current = i;
 					}
@@ -171,7 +176,7 @@ export default function TimeTable() {
 						setDragging(false);
 						stopTime.current = i;
 
-						openCreation(getDuration(startTime.current, stopTime.current));
+						openCreation(getDuration(startTime.current, stopTime.current), new Date(startOfWeek(new Date(), {weekStartsOn: 1}).getTime() + (startTime.current % 7) * 24*60*60*1000 + (Math.floor(startTime.current/7)*15 *60*1000) ));
 					}
 					}}
 					ref={tableCellsRefs.current[i]}
@@ -188,7 +193,7 @@ export default function TimeTable() {
 
 	return (
 		<main className={styles.main}>
-			<CreateIssue duration_={duration}></CreateIssue>
+			<CreateIssue duration_={duration} start_={startDate}></CreateIssue>
 			<Navbar></Navbar>
 			<div>Also Hi, lol</div>
 
@@ -197,7 +202,7 @@ export default function TimeTable() {
 			})}
 
 			<div className={styles.table}>
-				{generateDivs()}
+				{generateTimetableCells()}
 			</div>
 		</main>
 	);

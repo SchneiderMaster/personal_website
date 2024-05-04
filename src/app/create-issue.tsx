@@ -5,7 +5,7 @@ import { QueryDocumentSnapshot } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import TimeTable from "@/pages/timetable";
-export function CreateIssue({duration_}:any) {
+export function CreateIssue({duration_, start_}:any) {
 
 	const [duration, setDuration] = useState<number>(duration_);
 
@@ -16,6 +16,8 @@ export function CreateIssue({duration_}:any) {
     const [issue, setIssue] = useState<string>("");
 
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+
+	const [date, setDate] = useState<Date>(new Date());
 
 	const [selectedDuration, setSelectedDuration] = useState<number>(duration);
 
@@ -33,7 +35,10 @@ export function CreateIssue({duration_}:any) {
 	useEffect(() => {
 		setDuration(duration_);
 		setSelectedDuration(duration_);
-	}, [duration_]);
+
+		setDate(start_);
+		setSelectedDate(start_);
+	}, [duration_, start_]);
 
 
     const fetchIssues = async (projectId: string) => {
@@ -84,6 +89,7 @@ export function CreateIssue({duration_}:any) {
 
 			<input
 				type="datetime-local"
+				value={date.toISOString().substring(0, date.toISOString().length -1)}
 				onChange={(e) => {
 					if (e.currentTarget.valueAsDate) {
 						setSelectedDate(e.currentTarget.valueAsDate);
