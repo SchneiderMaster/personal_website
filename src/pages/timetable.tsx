@@ -141,8 +141,9 @@ export default function TimeTable() {
 			worklogs.forEach((worklog, index) => {
 				const startDate: Date = worklog.data().startDate.toDate();
 
-				const cellIndex: number = (startDate.getHours()*60 +  startDate.getMinutes())/15*7 + startDate.getDay() -1;
-				const cellPos = tableCellsRefs.current[cellIndex]?.current?.getBoundingClientRect()
+				const cellIndex: number = (startDate.getHours()*60 +  startDate.getMinutes())/15*7 + (startDate.getDay() != 0 ? startDate.getDay() -1 : 6);
+				console.log(startDate.getDay() + "; " + cellIndex);
+				const cellPos = tableCellsRefs.current[cellIndex]?.current?.getBoundingClientRect();
 				if(cellPos){
 					createWorklogDiv((cellPos.x), (cellPos.y + window.scrollY), worklog.data().title, worklog.data().issueId, worklog.id.toString(), worklog.data().duration/60, worklog.data().comment);
 				}
@@ -155,7 +156,6 @@ export default function TimeTable() {
 	function openCreation(duration: number, start: Date) {
 		setDuration(duration);
 		setStartDate(start);
-		console.log(start);
 	}
 
 	function generateTimetableHeader(): JSX.Element[]{
