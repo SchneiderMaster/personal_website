@@ -5,7 +5,7 @@
 .table {
 	display: grid;
 	grid-template-columns: repeat(7, 1fr);
-	grid-template-rows: repeat(96, 1fr);
+	grid-template-rows: repeat(97, 1fr);
 	grid-column-gap: 0px;
 	border: 1px solid #333;
 }
@@ -32,7 +32,6 @@
 	border-radius: 50px;
 	border: 1.5px solid #777;
 	pointer-events: none;
-
 	user-select: none;
 }
 
@@ -72,4 +71,19 @@
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 
+}
+
+.headerCell {
+	text-align: center;
+	width: calc(100%/7);
+	border: 1px;
+	border-bottom: 0px;
+	border-color: #333;
+	border-style: solid;
+
+	background-color: #141414;
+}
+
+.tableHeader {
+	display: flex;
 }

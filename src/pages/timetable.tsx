@@ -23,6 +23,8 @@ export default function TimeTable() {
 
 	const tableCells: JSX.Element[] = [];
 
+	const tableHeader: JSX.Element[] = [];
+ 
 	const [dragging, setDragging] = useState<boolean>(false);
 
 	const currentTimer = useRef<any>(null);
@@ -42,6 +44,16 @@ export default function TimeTable() {
 	const tableCellsRefs = useRef<RefObject<HTMLDivElement>[]>([]);
 
 	const [startDate, setStartDate] = useState<Date>(new Date());
+
+	const days: string[] = [
+		"Monday",
+		"Tuesday",
+		"Wednesday",
+		"Thursday",
+		"Friday",
+		"Saturday",
+		"Sunday"
+	]
 
 	function getDuration(start:number, stop:number) {
 		const value = Math.floor((stop-start)/7) * 900;		
@@ -146,7 +158,30 @@ export default function TimeTable() {
 		console.log(start);
 	}
 
+	function generateTimetableHeader(): JSX.Element[]{
+
+		for (let i = 0; i < 7; i++){
+			tableHeader.push(
+				<div 
+					key={days[i]}
+					className={styles.headerCell}>
+					{days[i]}
+				</div>
+
+			)
+		}
+
+		return tableHeader;
+
+	}
+
 	function generateTimetableCells(): JSX.Element[] {
+
+
+
+
+
+
 		const totalDivs = 96 * 7; // Total number of divs required
 
 		for (let i = 0; i < totalDivs; i++) {
@@ -199,8 +234,13 @@ export default function TimeTable() {
 				return worklogDiv;
 			})}
 
+			<div className={styles.tableHeader}>
+				{generateTimetableHeader()}
+			</div>
+
 			<div className={styles.table}>
-				{generateTimetableCells()}
+			{generateTimetableCells()}
+
 			</div>
 		</main>
 	);
