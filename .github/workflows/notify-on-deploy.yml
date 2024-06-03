@@ -1,0 +1,23 @@
+name: Notify on successful deployment
+on:
+  workflow_run:
+    workflows: 
+      - "Deploy to Firebase Hosting on PR"
+      - "Deploy to Firebase Hosting on merge"
+    types:
+      - completed
+    branches:
+      - '*'  # Trigger on all branches this is dumb
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debugging Step
+        run: echo "This workflow was triggered"
+      
+      - uses: actions/checkout@v2
+
+      - name: Notify me
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        run: curl -d "Successfully built and deployed Schneder-Tempo on main." -H "ta:rocket" ${{ secrets.NTFY_URL }}
